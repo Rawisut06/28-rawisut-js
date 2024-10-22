@@ -21,7 +21,7 @@ createBtn.addEventListener("click", () => {
     } else if (isDuplicate) {
         return alert("This product already exists.");
     }
-    if (priceValue === "" && isNaN(priceValue)) {
+    if (isNaN(priceValue) || priceValue <= 0) {
         return alert("Must enter a valid number for the price.");
     }
 
@@ -48,36 +48,47 @@ function displayDashboard(item) {
         <img src="${item.image}" alt="item-image">
         <div class="item-info">
             <h3>${item.name}</h3>
-            <p>${item.price}$</p>
+            <p>$${item.price}</p>
         </div>
+        <button onclick="editItem(${item.id})">Edit</button>
     </div>
     `;
 }
+
+function editItem(id) {
+    const editProduct = products.find((product) => product.id === id);
+    const newName = prompt("Edit Name", item.name);
+    if (newContent.trim() !== "") {
+      item.name = newName;
+      document.getElementById(`${id}`).querySelector("span").textContent = task.content;
+    }
+  }
 
 // สร้างอีเวนท์คลิกเพื่อใช้คำสั่ง selectedProducts()เพื่อแสดงสินค้าที่เลือก
 addBtn.addEventListener("click", () => {
     const checkboxes = document.querySelectorAll("input[name='item-name']:checked");
 
     checkboxes.forEach(checkbox => {
-        const parentDiv = checkbox.closest(".item"); // Get parent div
-        const selectedId = parseInt(parentDiv.id); // Get product ID from parent
-        const selectedItem = products.find(product => product.id === selectedId); // Find the product
+        const parentDiv = checkbox.closest(".item");
+        const selectedId = parseInt(parentDiv.id);
+        const selectedItem = products.find(product => product.id === selectedId);
         if (selectedItem) {
             selectedProducts(selectedItem);
+            checkbox.checked = false;
         }
     });
 })
 
 function selectedProducts(item) {
-    const cart = document.getElementById("display-product");
+    const cart = document.querySelector(".display-product");
     cart.innerHTML += `
-    <div class="cart-item" id="cart-${item.id}">
+    <div class="item" id="cart-${item.id}">
         <img src="${item.image}" alt="item-image">
         <div class="item-info">
             <h3>${item.name}</h3>
-            <p>${item.price}$</p>
+            <p>$${item.price}</p>
         </div>
-        <button onclick="removeCartItem()">Remove</button>
+        <button onclick="removeCartItem(${item.id})">Remove</button>
     </div>
     `;
 }
