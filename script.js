@@ -58,8 +58,8 @@ function displayItem(item) {
 
 // สร้างฟังก์ชั่นแสดงสินค้าใน dashboard
 function displayDashboard(item) {
-    const inputTag = `<input type="checkbox" name="item-name" value="${item.id}">`
-    const editBtnTag = `<button onclick="editItem(${item.id})">Edit</button>`
+    const inputTag = `<input type="checkbox" name="item-name" value="${item.id}">`;
+    const editBtnTag = `<button onclick="editItem(${item.id})">Edit</button>`;
     const dashboardItemHTML = `
         <div class="item" id="${item.id}">
             ${inputTag}
@@ -89,7 +89,7 @@ function editItem(id) {
         editItem.price = newPrice;
         document.getElementById(`${id}`).querySelector("p").textContent = `$${editItem.price}`;
     }
-    if (newImage.match(/^http.*\.(jpeg|jpg|gif|png)$/)) {
+    if (newImage.match(/^http.*\.(jpeg|jpg|gif|png)$/)) { //เช็ค url ที่เป็น image
         editItem.image = newImage;
         document.getElementById(`${id}`).querySelector("img").src = editItem.image;
     }
@@ -98,13 +98,11 @@ function editItem(id) {
 addBtn.addEventListener("click", () => {
     const checkboxes = dashboard.querySelectorAll("input[type='checkbox']");
 
-    checkboxes.forEach((checkbox) => {
-        if (checkbox.checked === true) {
-            const selectedItem = products.find(product => product.id == checkbox.value);
-            if (selectedItem) {
-                checkedProducts.push(selectedItem);
-                selectedProducts(selectedItem);
-            }
+    checkboxes.forEach((checkbox) => { // วนลูป checkbox ทุกตัว ที่ดึงค่ามาจาก input ใน dashboard
+        if (checkbox.checked === true) { // เช็ํคถ้ามีการกด checkbox
+            const selectedItem = products.find(product => product.id == checkbox.value); // กำหนดตัวแปรและเช็คค่าจากการหา item object ใน products array ที่มีการกด checkbox
+            checkedProducts.push(selectedItem);
+            selectedProducts(selectedItem);
             checkbox.checked = false;
         }
     })
@@ -129,21 +127,15 @@ function removeCartItem(id) {
     cartItem.remove();
 }
 
-// สร้างฟังก์ชั่นคำนวณสินค้า
-function calculate() {
-    const cartPrice = Number(document.querySelector("p").textContent);
-    cartPrice += cartPrice;
-}
-
-// สร้างอีเวนท์คลิกเพื่อใช้คำสั่ง calculate()เพื่อคำนวณราคาสินค้าที่เลือก
+// สร้างอีเวนท์คลิกเพื่อคำนวณราคาสินค้าที่เลือก
 calcBtn.addEventListener("click", () => {
     const cartItems = document.querySelectorAll(".display-product .item");
     const displayCalc = document.querySelector(".display-payment span");
-    let totalPrice = 0;
+    let totalPrice = 0; // กำหนดราคารวมเริ่มต้น
 
-    cartItems.forEach(cartItem => {
-        const priceText = cartItem.querySelector("p").textContent.replace('$', '');
-        totalPrice += Number(priceText);
-        displayCalc.innerHTML = totalPrice;
+    cartItems.forEach(cartItem => { // วนลูปสินค้าใน cart เพื่อแปลง type string เป็น number และนำมาบวกกัน
+        const priceText = cartItem.querySelector("p").textContent.replace('$', ''); // นำสัญลักษณ์ออกให้เหลือแต่ตัวเลข
+        totalPrice += Number(priceText); // เปลี่ยนตัวเลขจาก type string เป็น number และมาบวกกัน
+        displayCalc.innerHTML = totalPrice; // แสดงค่ารวมที่คำนวณ
     });
 });
