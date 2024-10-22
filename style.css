@@ -27,7 +27,11 @@ body {
 .container > .product-dashboard {
     width: 100%;
     min-width: 50px;
-    background-color: aliceblue;
+    padding: 0 16px 0 16px;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 .container > button {
     width: fit-content;
