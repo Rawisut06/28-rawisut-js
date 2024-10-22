@@ -39,6 +39,7 @@ createBtn.addEventListener("click", () => {
     }
     products.push(item);
     displayDashboard(item);
+    // คืนค่า value เป็นช่องว่าง เพื่อให้ value ใน input ที่เราพิมพ์มันหายไป
     nameInput.value = "";
     priceInput.value = "";
     imgInput.value = "";
@@ -69,11 +70,17 @@ function displayDashboard(item) {
     dashboard.innerHTML += dashboardItemHTML;
 }
 
+// ฟังก์ชั่นแก้ไขสินค้า
 function editItem(id) {
+    // กำหนดตัวแปรที่รับค่าจากการหา item object ที่ item.id ตรงกับ parameter
     const editItem = products.find((product) => product.id === id);
+
+    // กำหนดตัวแปรของ value ใน item object ที่แก้้ไขโดยใช้ prompt()
     const newName = prompt("Edit Name", editItem.name);
     const newPrice = prompt("Edit Price", editItem.price);
     const newImage = prompt("Edit Image", editItem.image);
+
+    // สร้างเงื่อนไขและเปลี่ยนแปลงค่า value ใน item object
     if (newName.trim() !== "") {
         editItem.name = newName;
         document.getElementById(`${id}`).querySelector("h3").textContent = editItem.name;
