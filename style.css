@@ -43,3 +43,26 @@ body {
     min-height: 100px;
     background-color: aliceblue;
 }
+.item {
+    display: flex;
+    padding: 10px;
+    gap: 8px;
+    position: relative;
+}
+.item > img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.item > .itemInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.item > button {
+    padding: 4px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
