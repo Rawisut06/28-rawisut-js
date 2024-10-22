@@ -54,7 +54,7 @@ body {
     height: 100px;
     object-fit: cover;
 }
-.item > .itemInfo {
+.item > .item-info {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
