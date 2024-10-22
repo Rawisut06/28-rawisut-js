@@ -7,7 +7,6 @@ const calcBtn = document.querySelector(".calc-price");
 const dashboard = document.querySelector(".product-dashboard");
 const products = [];
 const checkedProducts = [];
-// สร้าง item object เพื่อเก็บค่าที่ input มา
 
 // สร้างอีเวนท์คลิกเพื่อใช้คำสั่ง displayProduct() เพื่อแสดงสินค้าออกมาหลังคลิก
 createBtn.addEventListener("click", () => {
@@ -15,7 +14,7 @@ createBtn.addEventListener("click", () => {
     const nameValue = nameInput.value.trim();
     const priceValue = priceInput.value.trim();
     const imgValue = imgInput.value.trim();
-
+    
     // กำหนดตัวแปร เพื่อเช็คชื่อสินค้าที่ซ้ำกัน
     const isDuplicate = products.some(item => item.name === nameValue);
     // สร้างเงื่อนไขเมื่อใส่ input ผิด จะเรียกใช้ alert()
@@ -27,6 +26,11 @@ createBtn.addEventListener("click", () => {
     if (priceValue === "" || isNaN(priceValue) || priceValue <= 0) {
         return alert("Must enter a valid number for the price.");
     }
+    if (imgValue.match(/^http.*\.(jpeg|jpg|gif|png)$/) != null) {
+        return alert("This is not image.");
+    }
+
+    // สร้าง item object เพื่อเก็บค่าที่ input มา
     const item = {
         id: Date.now(), // เพื่อสร้าง unique id จาก timestamp
         name: nameValue,
@@ -76,11 +80,11 @@ function editItem(id) {
     }
     if (newPrice !== "" || !isNaN(newPrice) || newPrice >= 0) {
         editItem.price = newPrice;
-        document.getElementById(`${id}`).querySelector("p").textContent = editItem.price;
+        document.getElementById(`${id}`).querySelector("p").textContent = `$${editItem.price}`;
     }
     if (newImage !== "") {
         editItem.image = newImage;
-        document.getElementById(`${id}`).querySelector("p").textContent = editItem.image;
+        document.getElementById(`${id}`).querySelector("img").src = editItem.image;
     }
 }
 // สร้างอีเวนท์คลิกเพื่อใช้คำสั่ง selectedProducts()เพื่อแสดงสินค้าที่เลือก
@@ -115,9 +119,7 @@ function selectedProducts(item) {
 // ฟังก์ชั่นลบสินค้า
 function removeCartItem(id) {
     const cartItem = document.getElementById(`cart-${id}`);
-    if (cartItem) {
-        cartItem.remove();
-    }
+    cartItem.remove();
 }
 
 // สร้างฟังก์ชั่นคำนวณสินค้า
