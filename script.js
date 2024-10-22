@@ -14,7 +14,7 @@ createBtn.addEventListener("click", () => {
     const nameValue = nameInput.value.trim();
     const priceValue = priceInput.value.trim();
     const imgValue = imgInput.value.trim();
-    
+
     // กำหนดตัวแปร เพื่อเช็คชื่อสินค้าที่ซ้ำกัน
     const isDuplicate = products.some(item => item.name === nameValue);
     // สร้างเงื่อนไขเมื่อใส่ input ผิด จะเรียกใช้ alert()
@@ -26,7 +26,7 @@ createBtn.addEventListener("click", () => {
     if (priceValue === "" || isNaN(priceValue) || priceValue <= 0) {
         return alert("Must enter a valid number for the price.");
     }
-    if (imgValue.match(/^http.*\.(jpeg|jpg|gif|png)$/) != null) {
+    if (!imgValue.match(/^http.*\.(jpeg|jpg|gif|png)$/)) {
         return alert("This is not image.");
     }
 
@@ -82,7 +82,7 @@ function editItem(id) {
         editItem.price = newPrice;
         document.getElementById(`${id}`).querySelector("p").textContent = `$${editItem.price}`;
     }
-    if (newImage !== "") {
+    if (newImage.match(/^http.*\.(jpeg|jpg|gif|png)$/)) {
         editItem.image = newImage;
         document.getElementById(`${id}`).querySelector("img").src = editItem.image;
     }
